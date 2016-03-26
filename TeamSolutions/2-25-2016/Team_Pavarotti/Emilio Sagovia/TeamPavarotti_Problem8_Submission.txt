@@ -1,0 +1,66 @@
+//Author: Emmilio Segovia (Team Pavarotti)
+import java.util.*;
+public class Problem8 {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		System.out.println("Please input a sentence on one line:");
+		String input = in.nextLine();
+		String output = "";
+		char last = '0';
+		boolean word = false, tiny = false;
+		String blah="";
+		for (int i = 0; i < input.length(); i++) {
+			if (!Character.isAlphabetic(input.charAt(i))) {
+				output += input.charAt(i);
+				if (word) {
+					word = false;
+					last = '0';
+				}
+				if (tiny) {
+					tiny = false;
+					/*blah += input.charAt(i-2);
+					blah+=input.charAt(i-1);
+					System.out.println(blah);
+					blah = "";*/
+				}
+			}
+			else { //it is alpha
+				if (tiny) 
+					output+=input.charAt(i);
+				else {
+				if ((i == 0 || !Character.isAlphabetic(input.charAt(i-1))) && (i == input.length()-3 || !Character.isAlphabetic(input.charAt(i+1)) || !Character.isAlphabetic(input.charAt(i+2)))) { //shorter than 4
+					tiny = true;
+					word = true;
+					output += input.charAt(i);
+				}
+				else {
+					if (input.charAt(i) != 'a' && input.charAt(i) != 'e' && input.charAt(i) != 'i' && input.charAt(i) != 'o' && input.charAt(i) != 'u') {
+						if (!word) {
+							last = '0';
+							word = true;
+						}
+						if (i == (input.length()-1) || !Character.isAlphabetic(input.charAt(i+1))) {
+							output += input.charAt(i);
+						}
+						else if (input.charAt(i) != last) {
+							output += input.charAt(i);
+						}
+						if (input.charAt(i) != 'a' && input.charAt(i) != 'e' && input.charAt(i) != 'i' && input.charAt(i) != 'o' && input.charAt(i) != 'u')
+							last = input.charAt(i);
+					}
+					else if (!Character.isAlphabetic(input.charAt(i-1))) {
+						output += input.charAt(i);
+					}
+					else if (!Character.isAlphabetic(input.charAt(i+1))) {
+						output += input.charAt(i);
+					}
+				}
+		}
+			}
+	}
+	System.out.println("Abbreviation:");
+	System.out.println(output);
+
+}
+}
